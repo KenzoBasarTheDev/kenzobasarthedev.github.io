@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>KGL.js - Kenzo Graphics Library v2</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />   
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    body { 
+      background-color: #F1F0F0;
+      font-family: 'Fira Code', monospace;
+      text-align: center;
+      margin: 0;
+    } 
+
+    .Header-1 {
+      background-color: #5BA6CC;
+      font-family: 'Fira Code';
+      padding: 20px 40px;
+    } 
+
+    .Header-h1 { 
+      font-family: 'Fira Code', sans-serif;
+      border-color: #0E0C12;
+      color: #E8E8E8;
+      font-size: 48px;
+    }
+
+    .cool-h1 { 
+      font-family: 'Anton';
+    }
+
+    .Header-link {
+      display: inline-flex;
+      align-items: center;
+      font-family: monospace;
+      border-bottom: 1px dotted #402B76;
+      padding: 6px 10px;
+      color: #0E0C12;
+      text-decoration: none;
+      margin: 5px;
+    }
+
+    .Header-link svg {
+      width: 20px;
+      height: 20px;
+      margin-right: 6px;
+      fill: #0E0C12;
+    }
+
+    i {
+      display: block;
+      margin-top: 10px;
+      font-style: italic;
+      color: #222;
+    }
+    .Header-2 {
+      background-color: #21E104;
+      font-family: 'Arial';
+      padding: 10px 20px;
+    }
+    .Button { 
+      background-color: #322EA0;
+      font-family: Arial;
+      padding: 10px 5px; 
+      border-radius: 2px;
+      border-color: transparent; 
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <header class="Header-1">
+    <h1 class="Header-h1">Welcome to Kenzo's site! (KGL)</h1>
+
+    <a class="Header-link" href="https://www.npmjs.com/package/kenzo-graphics-library-v2">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 250">
+        <rect width="780" height="250" fill="#CB0000"/>
+        <path d="M130 85h60v80h-20v-60h-20v60h-20V85zm100 0h60v20h-40v10h30v20h-30v10h40v20h-60V85zm120 0h60v20h-40v10h30v20h-30v10h40v20h-60V85z" fill="#fff"/>
+      </svg>
+      Kenzo Graphics Library (KGL) NPM
+    </a>
+
+    <a class="Header-link" href="https://github.com/KenzoBasarTheDev/KGL.js">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+        <path d="M8 0C3.58 0 0 3.58 0 8a8.001 8.001 0 0 0 5.47 7.59c.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49C4 14.41 3.48 13.5 3.34 13.14c-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.2 1.87.86 2.33.66.07-.52.28-.86.51-1.06-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.01.08-2.1 0 0 .67-.22 2.2.82a7.64 7.64 0 0 1 2-.27 7.64 7.64 0 0 1 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.09.16 1.9.08 2.1.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.001 8.001 0 0 0 16 8c0-4.42-3.58-8-8-8z" fill="#000"/>
+      </svg>
+      Kenzo Graphics Library (KGL) Github
+    </a>
+ 
+  
+    <i>Custom math-based graphics engine built for web environments.</i>
+  </header>
+  <br>
+  <div alt="Mini-toolbar" class="Header-2">
+    <button class="Button" onclick="window.location.href='https://github.com/KenzoBasarTheDev'">Author</button>
+    <button class="Button" onclick="window.location.href='https://github.com/KenzoBasarTheDev/KGL.js/blob/main/README.md'">README.md</button>
+  </div>
+
+  <canvas id="kgl" width="640" height="480"></canvas>
+  <p>------------Simple--Kenzo-Graphic-Library-Preview-------------------</p>
+  <script type="module">
+    import { Kgl } from 'https://cdn.jsdelivr.net/gh/KenzoBasarTheDev/KGL.js@master/kgl.js';
+
+    const canvas = document.getElementById('kgl');
+    const kgl = new Kgl(canvas);
+
+    // Define a 3D cube (centered at origin)
+    const cube = [
+      [-1, -1, -1], [1, -1, -1],
+      [1, 1, -1],  [-1, 1, -1],
+      [-1, -1, 1], [1, -1, 1],
+      [1, 1, 1],   [-1, 1, 1]
+    ];
+
+    const edges = [
+      [0,1],[1,2],[2,3],[3,0],
+      [4,5],[5,6],[6,7],[7,4],
+      [0,4],[1,5],[2,6],[3,7]
+    ];
+
+    let angle = 0;
+
+    function rotateY(point, angle) {
+      const [x, y, z] = point;
+      const cos = Math.cos(angle);
+      const sin = Math.sin(angle);
+      return [
+        x * cos - z * sin,
+        y,
+        x * sin + z * cos
+      ];
+    }
+
+    function project([x, y, z]) {
+      const scale = 200 / (z + 5); // simple perspective
+      return [
+        x * scale + canvas.width / 2,
+        y * scale + canvas.height / 2
+      ];
+    }
+
+    function loop() {
+      kgl.ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const rotated = cube.map(p => rotateY(p, angle));
+      const projected = rotated.map(project);
+
+      kgl.ctx.strokeStyle = '#402B76';
+      edges.forEach(([a, b]) => {
+        const [x1, y1] = projected[a];
+        const [x2, y2] = projected[b];
+        kgl.ctx.beginPath();
+        kgl.ctx.moveTo(x1, y1);
+        kgl.ctx.lineTo(x2, y2);
+        kgl.ctx.stroke();
+      });
+
+      angle += 0.01;
+      requestAnimationFrame(loop);
+    }
+
+    loop();
+  </script>
+</body>
+<div alt="Readme">
+<h1>Kenzo Graphics Library v2 (KGL)</h1>
+<p>Kenzo Graphics Library (KGL) is a lightweight, math-based 2D and 3D engine for web-based applications and games. Designed for speed, simplicity, and small-scale use, KGL enables fast prototyping and educational graphics applications in HTML environments without external dependencies.</p>
+
+<h2>Key Features</h2>
+<ul>
+  <li>2D and 3D rendering via <code>&lt;canvas&gt;</code></li>
+  <li>UI elements (buttons, modals, images, etc.)</li>
+  <li>Texturing, shading, and lighting simulation</li>
+  <li>Built-in input handling for mouse and keyboard</li>
+  <li>HTML/HTA integration support via HTSTB system</li>
+</ul>
+
+<hr>
+
+<h2>Getting Started</h2>
+
+<h3>Install via NPM</h3>
+<pre><code>npm install kenzo-graphics-library-v2</code></pre>
+
+<h3>Install via CDN</h3>
+<pre><code>&lt;script type="module"&gt;
+  import { Kgl } from 'https://cdn.jsdelivr.net/gh/KenzoBasarTheDev/KGL.js@master/kgl.js';
+&lt;/script&gt;</code></pre>
+
+<h3>HTML Setup</h3>
+<pre><code>&lt;canvas id="myCanvas" width="640" height="480"&gt;&lt;/canvas&gt;
+&lt;script src="kgl.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  const canvas = document.getElementById('myCanvas');
+  const kgl = new Kgl(canvas);
+
+  function animate() {
+    kgl.clear();
+    kgl.updateRotation();
+    kgl.drawSolid(vertices, faces);
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+&lt;/script&gt;</code></pre>
+
+<h3>HTA Usage (Windows Desktop App Style)</h3>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;hta:application&gt;
+&lt;html&gt;
+&lt;body&gt;
+&lt;canvas id="c" width="640" height="480"&gt;&lt;/canvas&gt;
+&lt;script src="kgl.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  const canvas = document.getElementById('c');
+  const kgl = new Kgl(canvas);
+  const ui = new KglUI(kgl);
+  const htmlBox = new KglHTSTB(canvas);
+  htmlBox.createBox(10, 10, 200, 100, "&lt;b&gt;Hello from HTA&lt;/b&gt;");
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<hr>
+
+<h2>Best Practices for Lightweight Games</h2>
+<ul>
+  <li><strong>Minimize Faces:</strong> Use low-poly models for 3D.</li>
+  <li><strong>Reuse Buffers:</strong> Avoid regenerating geometry or textures each frame.</li>
+  <li><strong>Limit Draw Calls:</strong> Batch rendering where possible.</li>
+  <li><strong>Turn Off What You Don’t Use:</strong> Use <code>KGLconfig.Disable3D</code> or <code>Disable2D</code> when appropriate.</li>
+  <li><strong>Optimize Loops:</strong> Keep animations and calculations efficient.</li>
+</ul>
+
+<hr>
+
+<h2>Debugging Guide</h2>
+
+<h3>Common Errors</h3>
+
+<ul>
+  <li><strong>Face Culling in 2D</strong><br>
+    <em>Error:</em> <code>KGL error : 500 (Face culling is not for 2D)</code><br>
+    <em>Fix:</em> Set <code>KGLconfig.UseFaceCulling = false</code> before initializing a <code>Kgl2D</code> instance.
+  </li>
+  <li><strong>Canvas Tainted by Cross-Origin Texture</strong><br>
+    <em>Warning:</em> <code>KGL warning: Canvas tainted...</code><br>
+    <em>Fix:</em> Load textures from same origin or ensure CORS is configured correctly.
+  </li>
+  <li><strong>Disabled Components Not Loading</strong><br>
+    If <code>KGLconfig.Disable2D = true</code>, <code>Kgl2D</code> will not initialize.<br>
+    <em>Fix:</em> Ensure correct config flags are set before using components.
+  </li>
+</ul>
+
+<h3>Tips</h3>
+<ul>
+  <li>Use <code>KGLconfig.IsInDev = true</code> to enable dev-mode behavior.</li>
+  <li>Call <code>KGLconfig.info()</code> to print current configuration.</li>
+  <li>Use browser devtools to set breakpoints in animation loops.</li>
+</ul>
+
+<hr>
+
+<h2>Configuration</h2>
+<p>Set flags before creating components:</p>
+<pre><code>KGLconfig.set({
+  AppName: "My Mini Game",
+  UseFaceCulling: true,
+  Disable2D: false,
+  DisableHTSTB: false
+});</code></pre>
+
+<hr>
+
+<h2>Examples</h2>
+<ul>
+  <li><strong>3D Cube with UI</strong></li>
+  <li><strong>2D Platformer Prototype</strong></li>
+  <li><strong>HTA Tool with Canvas Buttons and Info Panels</strong></li>
+</ul>
+<p>Explore the <code>KglUI</code>, <code>Kgl2D</code>, and <code>KglHTSTB</code> classes for ready-made UI and layout tools.</p>
+
+<hr>
+
+<h2>Final Notes</h2>
+<p>KGL is ideal for indie experiments, educational demos, and rapid prototyping. While it's not intended for complex or physics-heavy projects, it remains highly extensible for creative and compact visual interfaces.<br>
+Happy coding!</p>
+
+<h1>Important Notes</h1>
+<ul>
+  <li>This is not related to <strong>kgl-jogl-js</strong> or any other APIs</li>
+  <li>This is not fully tested, Bugs still remain.</li>
+  <li>The usage might be invalid. Usage is not tested</li>
+</ul>
+
+<h2>CDN/LINKS</h2>
+<ul>
+  <li><a href="https://cdn.jsdelivr.net/gh/KenzoBasarTheDev/KGL.js@master/kgl.js">JSdelivr</a></li>
+  <li><a href="https://www.npmjs.com/package/kenzo-graphics-library-v2">NPM</a></li>
+</ul>
+</div>
+</html>
