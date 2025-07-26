@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Kenzo's Archive</title>
+  <title>Downloading</title>
   <style>
     .red {
       color: red;
@@ -18,7 +18,7 @@
   </li>
   <script>
     async function forceDownloadKGL() {
-      const fileUrl = 'https://raw.githubusercontent.com/KenzoBasarTheDev/KGL.js/refs/heads/main/kgl.js';
+      const fileUrl = 'https://raw.githubusercontent.com/KenzoBasarTheDev/KGL.js/main/kgl.js';
       try {
         const response = await fetch(fileUrl);
         if (!response.ok) throw new Error("Failed to fetch file.");
@@ -38,5 +38,9 @@
     }
   </script>  
   <p class="red">Note </p><span>: Your antivirus may block the download. If you want to download safely please use NPM or a CDN.</span>
+  <p style="margin-top: 10px;">
+    I do not have the intention to share or distribute malware. <br>
+    <strong>KGL is not malware-infected.</strong>
+  </p>
 </body>
 </html>
