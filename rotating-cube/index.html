@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>KGL Camera + Cube</title>
+  <style>
+    body {
+      margin: 0;
+      background: #111;
+      overflow: hidden;
+    }
+    canvas {
+      display: block;
+      background: #000;
+      margin: auto;
+    }
+  </style>
+</head>
+<body>
+<canvas id="kglCanvas" width="800" height="600"></canvas>
+
+<script type="module">
+  import { Kgl } from 'https://cdn.jsdelivr.net/gh/KenzoBasarTheDev/KGL.js/kgl.js'; // ← Make sure path is correct
+  import { KGLconfig } from 'https://cdn.jsdelivr.net/gh/KenzoBasarTheDev/KGL.js/kgl.js';
+
+  // Optional: Disable face culling for full face rendering
+  KGLconfig.set({ UseFaceCulling: false });
+
+  const canvas = document.getElementById("kglCanvas");
+  const kgl = new Kgl(canvas);
+
+  // Cube vertices and faces
+  const vertices = [
+    { x: -100, y: -100, z: -100 },
+    { x:  100, y: -100, z: -100 },
+    { x:  100, y:  100, z: -100 },
+    { x: -100, y:  100, z: -100 },
+    { x: -100, y: -100, z:  100 },
+    { x:  100, y: -100, z:  100 },
+    { x:  100, y:  100, z:  100 },
+    { x: -100, y:  100, z:  100 },
+  ];
+
+  const faces = [
+    [0, 1, 2, 3], // back
+    [4, 5, 6, 7], // front
+    [0, 1, 5, 4], // bottom
+    [2, 3, 7, 6], // top
+    [0, 3, 7, 4], // left
+    [1, 2, 6, 5], // right
+  ];
+
+  function loop() {
+    kgl.clear("#111");
+
+    // Optional: auto-rotate
+    kgl.updateRotation(0.01, 0.02);
+
+    // Draw rotating cube
+    kgl.drawSolid(vertices, faces, "#FE9900");
+
+    requestAnimationFrame(loop);
+  }
+
+  loop();
+</script>
+</body>
+</html>
