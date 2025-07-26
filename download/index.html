@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Kenzo's Archive</title>
+  <style>
+    .red {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>Download manually</h1>
+  <hr>
+  <p>Options</p>
+  <li> 
+    <button onclick="forceDownloadKGL()">KGL</button>
+  </li>
+  <script>
+    async function forceDownloadKGL() {
+      const fileUrl = 'https://raw.githubusercontent.com/KenzoBasarTheDev/KGL.js/refs/heads/main/kgl.js';
+      try {
+        const response = await fetch(fileUrl);
+        if (!response.ok) throw new Error("Failed to fetch file.");
+        
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'kgl.js';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+      } catch (err) {
+        alert("Download failed: " + err.message);
+      }
+    }
+  </script>  
+  <p class="red">Note </p><span>: Your antivirus may block the download. If you want to download safely please use NPM or a CDN.</span>
+</body>
+</html>
