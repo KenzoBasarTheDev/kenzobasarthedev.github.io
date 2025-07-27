@@ -203,7 +203,7 @@ gameLoop();
 
 <h3>KGLentity</h3>
 <ul>
-  <li>Simplified way to define and move basic 3D objects.</li>
+  <li>Simplified way to define nd move basic 3D objects.</li>
   <li>Includes update and render methods.</li>
   <li>Great for players, enemies, objects.</li>
 </ul>
@@ -214,6 +214,48 @@ gameLoop();
   <li>Switch between scene names and call <code>render(name)</code>.</li>
   <li>Keeps game logic and rendering modular.</li>
 </ul>
+
+<h3>📡 KGLhttp – Basic HTTP Requests (Fetch Wrapper)</h3>
+<p>`KGLhttp` provides a simple interface for making HTTP requests in KGL-based projects. It allows you to perform basic GET and POST requests using JavaScript's native `fetch()` with added error handling.</p>
+
+  <h2>🌐 KGLnoise – Procedural Noise Generator</h2>
+  <p><code>KGLnoise</code> allows generation of noise-based values for procedural terrain, visual effects, and animation.</p>
+
+  <h3>Noise Types</h3>
+  <ul>
+    <li><code>perlin(x, y)</code> – Generates smooth Perlin noise.</li>
+    <li><code>normal(x, y)</code> – Standard random-based noise.</li>
+    <li><code>kenzo(x, y)</code> – Hybrid custom noise (mix of Perlin + random for sharper terrain edges).</li>
+  </ul>
+
+  <h3>Usage</h3>
+  <pre><code>import { KGLnoise } from './kgl.js';
+
+const noise = new KGLnoise();
+let val = noise.perlin(12.3, 45.6);   // Smooth terrain
+let grain = noise.normal(32, 11);    // Static noise
+let hybrid = noise.kenzo(8.7, 1.2);  // Mixed style
+</code></pre>
+
+  <h3>Use Cases</h3>
+  <ul>
+    <li>Flat terrain generators</li>
+    <li>Particle jitter</li>
+    <li>Animated waves / clouds</li>
+    <li>Procedural 2D textures</li>
+  </ul>
+
+  <hr>
+
+  <h3>🧪 Example: Using KGLnoise for Terrain Heightmap</h3>
+  <pre><code>const noise = new KGLnoise();
+for (let x = 0; x &lt; 100; x++) {
+  for (let y = 0; y &lt; 100; y++) {
+    let height = noise.kenzo(x / 20, y / 20) * 50;
+    kgl2d.drawRect(x * 5, y * 5, 5, 5, true);
+  }
+}
+</code></pre>
 
 <hr>
 
