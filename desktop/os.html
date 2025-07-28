@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>KGL OS Desktop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    :root {
+      --wallpaper: url('https://wallpaperaccess.com/full/3019451.jpg');
+      --titlebar-bg: #0044cc;
+      --window-bg: white;
+      --font: sans-serif;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font);
+      background: var(--wallpaper) no-repeat center center fixed;
+      background-size: cover;
+      overflow: hidden;
+    }
+
+    #titlebar-desktop {
+      width: 100%;
+      background: var(--titlebar-bg);
+      color: white;
+      padding: 8px 15px;
+      font-weight: bold;
+      font-size: 16px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+      user-select: none;
+    }
+
+    #desktop {
+      width: 100vw;
+      height: calc(100vh - 32px);
+      position: relative;
+    }
+
+    .icon {
+      width: 80px;
+      text-align: center;
+      color: white;
+      cursor: pointer;
+      margin: 10px;
+      position: absolute;
+    }
+
+    .icon img, .icon svg {
+      width: 48px;
+      height: 48px;
+      display: block;
+      margin: 0 auto 5px;
+    }
+
+    .window {
+      width: 70vw;
+      height: 70vh;  
+      position: absolute;
+      top: 15vh;
+      left: 15vw;
+      background: var(--window-bg);
+      border: 2px solid var(--titlebar-bg);
+      display: none;
+      flex-direction: column;
+      box-shadow: 0 0 20px #000;
+    }
+
+    .titlebar {
+      background: var(--titlebar-bg);
+      color: white;
+      padding: 5px 10px;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: move;
+    }
+
+    .titlebar button {
+      background: white;
+      color: var(--titlebar-bg);
+      border: none;
+      cursor: pointer;
+      padding: 2px 8px;
+      font-weight: bold;
+    }
+
+    .tab-bar {
+      display: flex;
+      background: #eee;
+    }
+
+    .tab-bar button {
+      flex: 1;
+      padding: 10px;
+      cursor: pointer;
+      border: none;
+      background: #ddd;
+      font-weight: bold;
+    }
+
+    .tab-bar button.active {
+      background: #fff;
+      border-bottom: 2px solid var(--titlebar-bg);
+    }
+
+    .experiment-content {
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .experiment-pane {
+      display: none;
+      height: 100%;
+    }
+
+    .experiment-pane.active {
+      display: flex;
+      flex-direction: column;
+    }
+
+    textarea, input[type="text"] {
+      width: 100%;
+      resize: none;
+      font-family: monospace;
+      padding: 10px;
+      box-sizing: border-box;
+      margin: 0;
+    }
+
+    textarea {
+      height: 40%;
+    }
+
+    iframe.preview, .markdown-output {
+      flex: 1;
+      width: 100%;
+      border-top: 1px solid #ccc;
+      overflow: auto;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    .markdown-output {
+      background: #f8f8f8;
+      font-family: sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <div id="titlebar-desktop">KGL OS Desktop</div>
+  <div id="desktop">
+    <div class="icon" style="top: 30px; left: 30px;" onclick="openWindow('kglWindow')">
+      <img src="https://kenzobasarthedev.github.io/favicon.png" alt="KGL Demos">
+      <span>KGL Demos</span>
+    </div>
+    <div class="icon" style="top: 130px; left: 30px;" onclick="openWindow('expWindow')">
+      <img src="https://cdn-icons-png.flaticon.com/512/5115/5115082.png" alt="Experiments">
+      <span>Experiments</span>
+    </div>
+    <div class="icon" style="top: 230px; left: 30px;" onclick="openWindow('themeWindow')">
+      <img src="https://cdn-icons-png.flaticon.com/512/3069/3069171.png" alt="Themes">
+      <span>Themes</span>
+    </div>
+    <div class="icon" style="top: 330px; left: 30px;" onclick="openWindow('mediaWindow')">
+      <img src="https://cdn-icons-png.flaticon.com/512/727/727245.png" alt="Media Player">
+      <span>Media Player</span>
+    </div>
+
+    <div class="icon" style="top: 430px; left: 30px;" onclick="openWindow('browserWindow')">
+      <img src="https://cdn-icons-png.flaticon.com/512/833/833281.png" alt="Browser">
+      <span>Web</span>
+    </div>
+    <div class="icon" style="top: 530px; left: 30px;" onclick="openWindow('notepadWindow')">
+      <img src="https://cdn-icons-png.flaticon.com/512/5968/5968517.png" alt="Notepad">
+      <span>Notepad</span>
+    </div>
+    <div class="icon" style="top: 30px; left: 130px;" onclick="openWindow('terminalWindow')">
+      <img src="https://cdn-icons-png.flaticon.com/512/2972/2972459.png" alt="Terminal">
+      <span>Terminal</span>
+    </div>
+    <div class="icon" style="top: 130px; left: 130px;" onclick="openWindow('aboutWindow')">
+      <img src="https://cdn-icons-png.flaticon.com/512/1087/1087929.png" alt="About">
+      <span>About</span>
+    </div>
+
+    <div class="window" id="kglWindow">
+      <div class="titlebar">KGL Demos <button onclick="closeWindow('kglWindow')">X</button></div>
+      <iframe src="https://kenzobasarthedev.github.io/rotating-cube/" class="preview"></iframe>
+    </div>
+
+    <div class="window" id="browserWindow">
+      <div class="titlebar">Web Browser <button onclick="closeWindow('browserWindow')">X</button></div>
+      <iframe src="https://kenzobasarthedev.github.io" class="preview"></iframe>
+    </div>
+
+    <div class="window" id="notepadWindow">
+      <div class="titlebar">Notepad <button onclick="closeWindow('notepadWindow')">X</button></div>
+      <textarea style="flex: 1; font-family: monospace; padding: 10px;" placeholder="Type your notes here..."></textarea>
+    </div>
+
+    <div class="window" id="terminalWindow">
+      <div class="titlebar">Terminal <button onclick="closeWindow('terminalWindow')">X</button></div>
+      <div id="terminalOutput" style="background: black; color: #0f0; font-family: monospace; padding: 10px; flex: 1; overflow-y: auto;"></div>
+      <input id="terminalInput" type="text" placeholder="Type JS and press Enter..." 
+             style="background: black; color: #0f0; font-family: monospace; border: none; outline: none; padding: 10px; width: 100%;" 
+             onkeydown="if(event.key==='Enter') runTerminalCommand()">
+    </div>
+
+
+    <div class="window" id="aboutWindow">
+      <div class="titlebar">About KGL OS <button onclick="closeWindow('aboutWindow')">X</button></div>
+      <div style="padding: 20px;">
+        <h2>KGL OS Desktop</h2>
+        <p>Created by Kenzo using HTML/CSS/JS</p>
+        <p>With KGL Graphics integration, media player, themes, markdown preview and more.</p>
+      </div>
+    </div>
+
+    <div class="window" id="expWindow">
+      <div class="titlebar">Experiments <button onclick="closeWindow('expWindow')">X</button></div>
+      <div class="tab-bar">
+        <button class="active" onclick="switchTab(0)">Markdown</button>
+        <button onclick="switchTab(1)">KGL App Maker</button>
+      </div>
+      <div class="experiment-content">
+        <div class="experiment-pane active">
+          <textarea id="mdInput" placeholder="# Hello Markdown\nType **here** to preview!"></textarea>
+          <div class="markdown-output" id="mdOutput"></div>
+        </div>
+        <div class="experiment-pane">
+          <textarea id="kglCode"></textarea>
+          <iframe id="kglPreview" class="preview"></iframe>
+        </div>
+      </div>
+    </div>
+
+    <div class="window" id="themeWindow">
+      <div class="titlebar">Theme Selector <button onclick="closeWindow('themeWindow')">X</button></div>
+      <div style="padding: 20px;">
+        <button onclick="setTheme('classic')">Classic</button>
+        <button onclick="setTheme('futuristic')">Futuristic</button>
+        <button onclick="setTheme('nostalgic')">Nostalgic</button>
+      </div>
+    </div>
+
+<div class="window" id="mediaWindow">
+  <div class="titlebar">Media Player <button onclick="closeWindow('mediaWindow')">X</button></div>
+  <div style="padding: 10px; display: flex; flex-direction: column; gap: 10px;">
+    <input type="file" id="uploadMedia" accept="audio/*,video/*">
+    <input type="text" id="mediaUrl" placeholder="Paste audio/video URL here" />
+    <input type="text" id="mediaTitle" placeholder="Title (e.g. My Song)" />
+    <input type="text" id="mediaArtist" placeholder="Artist (e.g. Kenzo)" />
+    
+    <div style="display: flex; gap: 10px;">
+      <button onclick="playMedia()">▶️ Play</button>
+      <button onclick="pauseMedia()">⏸️ Pause</button>
+      <button onclick="stopMedia()">⏹️ Stop</button>
+    </div>
+    
+    <div style="font-weight: bold;">
+      <span id="nowPlaying">🎵 Now Playing: -</span><br>
+      <span id="nowArtist">👤 Artist: -</span>
+    </div>
+
+    <audio id="mediaAudio" style="width: 100%; display: none;" controls></audio>
+    <video id="mediaVideo" style="width: 100%; display: none;" controls></video>
+  </div>
+</div>
+
+  </div>
+
+  <script>
+    const windows = document.querySelectorAll('.window');
+    let zIndex = 1;
+
+    windows.forEach(win => {
+      const titlebar = win.querySelector('.titlebar');
+      let offsetX, offsetY, isDragging = false;
+
+      titlebar.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        offsetX = e.clientX - win.offsetLeft;
+        offsetY = e.clientY - win.offsetTop;
+        win.style.zIndex = ++zIndex;
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        win.style.left = `${e.clientX - offsetX}px`;
+        win.style.top = `${e.clientY - offsetY}px`;
+      });
+
+      window.addEventListener('mouseup', () => isDragging = false);
+    });
+
+    function openWindow(id) {
+      const win = document.getElementById(id);
+      win.style.display = 'flex';
+      win.style.zIndex = ++zIndex;
+    }
+
+    function closeWindow(id) {
+      document.getElementById(id).style.display = 'none';
+    }
+
+    function switchTab(index) {
+      document.querySelectorAll('.tab-bar button').forEach((btn, i) => {
+        btn.classList.toggle('active', i === index);
+        document.querySelectorAll('.experiment-pane')[i].classList.toggle('active', i === index);
+      });
+      if (index === 1) updateKglPreview();
+    }
+
+    document.getElementById('kglCode').addEventListener('input', () => {
+      const code = document.getElementById('kglCode').value;
+      localStorage.setItem('kglCode', code);
+      updateKglPreview();
+    });
+
+    function updateKglPreview() {
+      const code = document.getElementById("kglCode").value;
+      document.getElementById("kglPreview").srcdoc = code;
+    }
+
+  function playMedia() {
+    const fileInput = document.getElementById('uploadMedia');
+    const urlInput = document.getElementById('mediaUrl').value.trim();
+    const title = document.getElementById('mediaTitle').value.trim() || "Unknown";
+    const artist = document.getElementById('mediaArtist').value.trim() || "Unknown";
+
+    const audio = document.getElementById('mediaAudio');
+    const video = document.getElementById('mediaVideo');
+
+    // Reset all media
+    audio.pause(); video.pause();
+    audio.style.display = "none";
+    video.style.display = "none";
+
+    document.getElementById('nowPlaying').innerText = `🎵 Now Playing: ${title}`;
+    document.getElementById('nowArtist').innerText = `👤 Artist: ${artist}`;
+
+    if (fileInput.files.length > 0) {
+      const file = fileInput.files[0];
+      const url = URL.createObjectURL(file);
+      if (file.type.startsWith("video")) {
+        video.src = url;
+        video.style.display = "block";
+        video.play();
+      } else {
+        audio.src = url;
+        audio.style.display = "block";
+        audio.play();
+      }
+    } else if (urlInput) {
+      if (urlInput.endsWith(".mp4") || urlInput.includes("video")) {
+        video.src = urlInput;
+        video.style.display = "block";
+        video.play();
+      } else {
+        audio.src = urlInput;
+        audio.style.display = "block";
+        audio.play();
+      }
+    }
+  }
+
+  function pauseMedia() {
+    document.getElementById('mediaAudio').pause();
+    document.getElementById('mediaVideo').pause();
+  }
+
+  function stopMedia() {
+    const audio = document.getElementById('mediaAudio');
+    const video = document.getElementById('mediaVideo');
+    audio.pause(); audio.currentTime = 0;
+    video.pause(); video.currentTime = 0;
+  }
+
+    function setTheme(theme) {
+      localStorage.setItem('theme', theme);
+      if (theme === "classic") {
+        document.documentElement.style.setProperty('--wallpaper', "url('https://wallpaperaccess.com/full/3019451.jpg')");
+        document.documentElement.style.setProperty('--titlebar-bg', '#0044cc');
+        document.documentElement.style.setProperty('--window-bg', 'white');
+      } else if (theme === "futuristic") {
+        document.documentElement.style.setProperty('--wallpaper', "linear-gradient(to bottom right, #2222ff, #9900ff)");
+        document.documentElement.style.setProperty('--titlebar-bg', '#5500aa');
+        document.documentElement.style.setProperty('--window-bg', '#eef');
+      } else if (theme === "nostalgic") {
+        document.documentElement.style.setProperty('--wallpaper', "url('https://raw.githubusercontent.com/angelofallars/windows95-wallpaper/main/wallpaper.jpg')");
+        document.documentElement.style.setProperty('--titlebar-bg', 'navy');
+        document.documentElement.style.setProperty('--window-bg', '#c0c0c0');
+      }
+    }
+
+    window.onload = () => {
+      const savedCode = localStorage.getItem('kglCode');
+      if (savedCode) {
+        document.getElementById('kglCode').value = savedCode;
+        updateKglPreview();
+      }
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) setTheme(savedTheme);
+      document.getElementById('mdInput').dispatchEvent(new Event('input'));
+    };
+    function runTerminalCommand() {
+      const input = document.getElementById('terminalInput');
+      const output = document.getElementById('terminalOutput');
+      const command = input.value.trim();
+      if (command) {
+        output.innerHTML += `> ${command}<br>`;
+        try {
+          const result = eval(command);
+          output.innerHTML += result !== undefined ? `${result}<br>` : '';
+        } catch (e) {
+          output.innerHTML += `<span style="color: red;">${e}</span><br>`;
+        }
+        output.scrollTop = output.scrollHeight;
+        input.value = '';
+      }
+    }
+  </script>
+</body>
+</html>

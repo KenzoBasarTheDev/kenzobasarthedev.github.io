@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>KGL OS Booting...</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: black;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 48px;
+      margin-bottom: 20px;
+      color: #00ccff;
+    }
+
+    .loading-bar-container {
+      width: 60%;
+      height: 20px;
+      border: 2px solid #00ccff;
+      background: #111;
+    }
+
+    .loading-bar {
+      width: 0%;
+      height: 100%;
+      background: #00ccff;
+      animation: load 3s linear forwards;
+    }
+
+    @keyframes load {
+      0% { width: 0%; }
+      100% { width: 100%; }
+    }
+
+    .loading-text {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <h1>KGL OS</h1>
+  <div class="loading-bar-container">
+    <div class="loading-bar"></div>
+  </div>
+  <div class="loading-text">Booting KGL OS...</div>
+
+  <script>
+    setTimeout(() => {
+      window.location.href = "https://kenzobasarthedev.github.io/desktop/os.html";
+    }, 3000);
+  </script>
+</body>
+</html>
