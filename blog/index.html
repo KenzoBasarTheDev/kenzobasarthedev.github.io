@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>KGL Blog - Kenzo Graphics Library</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
+    body {
+      margin: 0;
+      background: #dce7f7;
+      color: #222;
+    }
+    header {
+      background: #3366cc;
+      color: white;
+      padding: 16px 20px;
+      font-size: 1.6em;
+      font-weight: bold;
+      border-bottom: 3px solid #254d99;
+    }
+    main {
+      padding: 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+    .blog-post {
+      background: #fff;
+      border: 2px solid #aac6ff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin-bottom: 24px;
+      padding: 20px;
+      transition: 0.2s ease;
+    }
+    .blog-post:hover {
+      transform: scale(1.01);
+      border-color: #3366cc;
+    }
+    .blog-title {
+      font-size: 1.4em;
+      color: #0047ab;
+      margin: 0 0 6px;
+    }
+    .blog-date {
+      font-size: 0.85em;
+      color: #777;
+      margin-bottom: 10px;
+    }
+    .blog-content {
+      font-size: 1em;
+      line-height: 1.5;
+    }
+    .more-text {
+      display: none;
+      margin-top: 10px;
+    }
+    .read-more {
+      color: #0047ab;
+      font-weight: bold;
+      display: inline-block;
+      margin-top: 8px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .read-more:hover {
+      text-decoration: underline;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #3366cc;
+      color: white;
+      font-size: 0.9em;
+    }
+    @media (max-width: 600px) {
+      .blog-post {
+        padding: 15px;
+      }
+      header {
+        font-size: 1.3em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>KGL Blog - Kenzo Graphics Library</header>
+  <main>
+
+    <div class="blog-post">
+      <div class="blog-title">Why I didn't publish v1.0.0</div>
+      <div class="blog-date">July 28, 2025</div>
+      <div class="blog-content">
+        KGL 1.0.0 was a prototype version developed by Kenzo
+        <span class="more-text">
+          <br><br>
+          This version had bugs like face culling issues and screen flickering.
+          I got bored of trying to fix it and rewritten it into 2.0.0
+          <br><br>
+          Therefore, 1.0.0 was pretty much, a broken version. Kind of like a homemade toaster.
+        </span>
+        <a href="#" class="read-more">Read More</a>
+      </div>
+    </div>
+
+    <div class="blog-post">
+      <div class="blog-title">Try out KGL Desktop!</div>
+      <div class="blog-date">July 28, 2025</div>
+      <div class="blog-content">
+        Access KGL desktop by the Desktop button in the homepage.
+        <span class="more-text">
+          <br><br>
+          It is styled like an operating system (Or environment), You have a javascript terminal, a media player,
+          an experiment app, themes, toaster (No, It doesn't exist)
+        </span>
+        <a href="#" class="read-more">Read More</a>
+      </div>
+    </div>
+
+    <div class="blog-post">
+      <div class="blog-title">Thank you for 718+ downloads! </div>
+      <div class="blog-date">July 29, 2025</div>
+      <div class="blog-content">
+        THANK Y'ALL SO MUCH FOR 718 DOWNLOADS!!!
+        <span class="more-text">
+          <br><br> 
+          <h2>Celebration</h2>
+          I will now leak my prototypes (Can be canceled)
+          <ul> 
+            <li>
+              <strong>KGLelectron</strong><br>
+              Yes! KGL for Electron shall come!
+            </li>
+            <li>
+              <strong>KGLts</strong><br>
+              It’s planned!
+            </li>
+          </ul>
+          Give me ideas in the next post!
+        </span>
+        <a href="#" class="read-more">Read More</a>
+      </div>
+    </div>
+
+    <div class="blog-post">
+      <div class="blog-title">What should I add next to KGL?</div>
+      <div class="blog-date">Got ideas? Drop them below!</div>
+      <div class="blog-content">
+        <form action="https://formspree.io/f/xqalbgrl" method="POST">
+          <label for="email"><strong>Your email</strong> (optional):</label><br>
+          <input type="email" name="email" id="email" style="width: 100%; margin: 8px 0 16px; padding: 10px; border-radius: 6px; border: 1px solid #ccc;" />
+
+          <label for="message"><strong>Your message / feature request</strong>:</label><br>
+          <textarea name="message" id="message" rows="5" style="width: 100%; margin: 8px 0 16px; padding: 10px; border-radius: 6px; border: 1px solid #ccc;" required></textarea>
+
+          <button type="submit" style="background-color: #3366cc; color: white; padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer;">Send Feedback</button>
+        </form>
+      </div>
+    </div>
+
+  </main>
+  <footer>
+    &copy; 2025 Kenzo Basar — KGL v7.0.4 — <a href="https://kenzobasarthedev.github.io" style="color: #ffe;">Back to Site</a>
+  </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelectorAll('.read-more').forEach(link => {
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+          const moreText = this.previousElementSibling;
+
+          if (moreText.style.display === 'none' || moreText.style.display === '') {
+            moreText.style.display = 'block';
+            this.textContent = 'Show Less';
+          } else {
+            moreText.style.display = 'none';
+            this.textContent = 'Read More';
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
